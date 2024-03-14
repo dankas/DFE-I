@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Atividade 03</title>
+    <style>
+        header, footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        body {
+            margin: 0;
+        }
+        #div1 {
+                width: 1050px;
+                height: 500px;
+                padding: 10px;
+                border: 1px solid darkgreen;
+                }
+        #map {
+                width: 1000px;
+                height: 300px;
+                padding: 5px;
+                border: 1px solid darkgreen;
+                }
+        #div2 {
+                width: 350px;
+                height: 100px;
+                padding: 10px;
+                border: 1px solid darkgreen;
+                }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Atividade 03</h1>
+    </header>
+
+    <main>
+        <p>Clique no botão para pegar suas coordenadas.</p>
+        <button onclick="getLocalizacao()">localizacao</button>
+            <div id="div1" ondrop="soltar(event)" ondragover="permiteSoltar(event)">
+            <div id="geo"></div>
+            </div>
+            <br>
+            <div id="div2"  draggable="true" ondragstart="arrastar(event)">
+            <form>
+                <label for="id_note">Anotação </label>
+                <input id="id_note" type="text"  placeholder="notas">
+            </form>
+            </div>
+            
+    </main>
+
+    <footer>
+        <p>Daniel Moraes</p>
+    </footer>
+    <script>
+        function permiteSoltar(ev) {
+        ev.preventDefault();
+        }
+        function arrastar(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        }
+        function soltar(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        }
+        var x = document.getElementById("geo");
+        function getLocalizacao() {
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(mostraPosicao);
+        } else {
+        x.innerHTML = "Geolocalização não suportada pelo browser.";
+        }
+        }
+        function mostraPosicao(posicao) {
+        x.innerHTML = "<iframe width='1000' height='450' src='https://www.openstreetmap.org/export/embed.html?bbox="+ posicao.coords.latitude + "%2C"+ posicao.coords.longitude + "&amp;layer=mapnik' style='border: 1px solid black'></iframe><br/><small><a href='https://www.openstreetmap.org/#map=17/"+posicao.coords.latitude+"/"+posicao.coords.longitude+"'>Ver mapa ampliado</a></small>"
+        }
+
+</script>
+</body>
+</html>
+-
